@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -13,5 +14,9 @@ func TestHealth(t *testing.T) {
 
 	if rec.Code != http.StatusOK {
 		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
+	}
+
+	if !strings.Contains(rec.Body.String(), `"status":"ok"`) {
+		t.Fatalf("body = %s, want %s", rec.Body.String(), `"status":"ok"`)
 	}
 }
